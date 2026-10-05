@@ -52,6 +52,7 @@ img{max-width:100%}
   --plum-900:#200E32; --plum-800:#2F1547; --plum-700:#41205F; --plum-600:#552C78;
   --plum-500:#6C3D94; --plum-300:#A97FCD; --plum-100:#EDE4F5; --plum-50:#F7F2FB;
   --gold:#B8860F; --gold-l:#E3B63C;
+  --beni:#B8341C;
   --bg:#FBF9FC; --surf:#FFFFFF; --line:#E3DAEC; --line-2:#CFC0DE;
   --ink:#1B1223; --ink-2:#564A63; --ink-3:#857896;
   --onplum:#F7F2FB; --onplum-2:#CDBADF; --onplum-3:#A491B8;
@@ -59,6 +60,7 @@ img{max-width:100%}
   --ff-m:"Shippori Mincho B1",serif;
   --ff-g:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
   --maxw:820px;
+  --hdh:58px;
   color-scheme:light;
 }
 *{box-sizing:border-box}
@@ -70,13 +72,13 @@ a{color:var(--plum-600);text-underline-offset:3px}
 a:focus-visible,button:focus-visible{outline:3px solid var(--gold-l);outline-offset:2px;border-radius:8px}
 .wrap{max-width:var(--maxw);margin-inline:auto;padding-inline:18px}
 .tnum{font-variant-numeric:tabular-nums}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+html{scroll-behavior:smooth}
 
 /* ===== ヘッダー ===== */
 .hd{position:sticky;top:env(safe-area-inset-top,0px);z-index:60;background:var(--surf);
   border-bottom:1px solid var(--line)}
-.hd-in{display:flex;align-items:center;gap:10px;min-height:58px}
-.brand{display:flex;align-items:center;margin-right:auto;min-width:0}
+.hd-in{display:flex;align-items:center;min-height:var(--hdh)}
 .brand b{font-family:var(--ff-m);font-weight:800;font-size:1.02rem;letter-spacing:.02em;
   white-space:nowrap;line-height:1.25}
 .brand span{display:block;font-family:var(--ff-g);font-weight:500;font-size:.65rem;
@@ -103,6 +105,11 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold-l);outline-off
 .cd b{font-family:var(--ff-m);font-size:1.3rem}
 .selv{position:absolute;left:0;right:0;bottom:0;height:20px;opacity:.9}
 
+/* ===== 写真 ===== */
+.photo{margin:24px auto 0;border-radius:16px;overflow:hidden;line-height:0;
+  background:var(--plum-900);box-shadow:var(--shadow)}
+.photo img{display:block;width:100%;height:auto}
+
 /* ===== 更新情報 ===== */
 .news{margin-top:28px;background:var(--plum-50);border-block:1px solid var(--line)}
 .news-in{padding-block:16px}
@@ -118,13 +125,33 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold-l);outline-off
 .news .t{font-size:.93rem;font-weight:500;flex:1 1 100%;line-height:1.7}
 @media(min-width:560px){.news .t{flex:1 1 auto}}
 
-/* ===== 本文 ===== */
-.sechead{display:flex;align-items:baseline;gap:12px;margin-block:34px 15px}
+/* ===== 目次ナビ ===== */
+.nav{position:sticky;top:calc(var(--hdh) + env(safe-area-inset-top,0px));z-index:50;
+  background:rgba(251,249,252,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;gap:6px;overflow-x:auto;padding-block:9px;scrollbar-width:thin}
+.nav a{flex:none;min-height:40px;display:inline-flex;align-items:center;padding:0 14px;
+  border-radius:999px;border:1px solid var(--line-2);background:var(--surf);
+  color:var(--ink);text-decoration:none;font-size:.84rem;font-weight:700;white-space:nowrap}
+.nav a:hover{border-color:var(--plum-500);color:var(--plum-700)}
+
+/* ===== セクション ===== */
+section[id]{scroll-margin-top:calc(var(--hdh) + 60px)}
+.sechead{display:flex;align-items:baseline;gap:12px;margin-block:38px 15px}
 .sechead h2{font-size:1.3rem}
 .sechead .en{font-size:.66rem;letter-spacing:.2em;color:var(--ink-3);font-weight:700}
 .sechead .rule{flex:1;height:1px;background:var(--line-2);align-self:center}
+.lede{color:var(--ink-2);font-size:.9rem;margin-bottom:14px}
 .card{background:var(--surf);border:1px solid var(--line);border-radius:16px;
   padding:6px 20px;box-shadow:var(--shadow)}
+.box{background:var(--surf);border:1px solid var(--line);border-radius:16px;
+  padding:18px 20px;box-shadow:var(--shadow)}
+.box + .box{margin-top:11px}
+.box h3{font-size:1.04rem}
+.box h3 .when{display:block;font-family:var(--ff-g);font-weight:700;font-size:.78rem;
+  color:var(--plum-600);letter-spacing:.04em;margin-bottom:3px}
+.box p{font-size:.9rem;color:var(--ink-2);margin-top:7px}
+.box ul{margin:8px 0 0;padding-left:1.15em;font-size:.88rem;color:var(--ink-2)}
+.box ul li{margin-top:4px}
 .spec{display:grid;grid-template-columns:5.4em 1fr;gap:0;margin:0}
 .spec dt{font-size:.8rem;font-weight:700;color:var(--plum-600);padding-block:15px;
   border-bottom:1px solid var(--line)}
@@ -133,18 +160,60 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--gold-l);outline-off
 .spec dd .sub{display:block;font-size:.85rem;color:var(--ink-2);margin-top:4px}
 .spec > :nth-last-child(-n+2){border-bottom:0}
 
+/* ===== プログラム ===== */
+.daytabs{display:flex;gap:6px;margin-bottom:14px}
+.daytabs button{flex:1;min-height:60px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surf);color:var(--ink);font-family:var(--ff-g);font-weight:700;font-size:.73rem;
+  cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;line-height:1.3}
+.daytabs button b{font-family:var(--ff-m);font-size:1.04rem}
+.daytabs button[aria-selected="true"]{background:var(--plum-700);border-color:var(--plum-700);color:#fff}
+.daytabs button[aria-selected="true"] b{color:#fff}
+ol.prog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+ol.prog > li{display:grid;grid-template-columns:4.3em 1fr;gap:12px;background:var(--surf);
+  border:1px solid var(--line);border-left:5px solid var(--plum-500);border-radius:14px;
+  padding:14px 16px 14px 13px;box-shadow:var(--shadow)}
+ol.prog > li.hl{border-left-color:var(--beni)}
+ol.prog > li.fire{border-left-color:var(--gold)}
+.ptime{font-family:var(--ff-m);font-weight:800;font-size:1.1rem;line-height:1.35}
+.pn{font-weight:700;font-size:1.04rem;line-height:1.5}
+.pnote{font-size:.84rem;color:var(--ink-2);margin-top:4px}
+.pwhy{margin-top:9px;padding:10px 12px;border-radius:10px;background:var(--plum-50);
+  border-left:3px solid var(--plum-300);font-size:.85rem;line-height:1.8;color:var(--ink)}
+ul.det{list-style:none;margin:9px 0 0;padding:0;font-size:.85rem;color:var(--ink-2);line-height:1.8}
+ul.det > li{margin-top:3px}
+ul.det .grp{font-weight:700;color:var(--plum-700);display:block;margin-top:9px}
+ul.det .grp:first-child{margin-top:0}
+ul.det ul{list-style:none;margin:2px 0 0;padding-left:1em;border-left:2px solid var(--line)}
+details.det{margin-top:9px}
+details.det > summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
+  min-height:42px;padding:0 15px;border-radius:999px;border:1px solid var(--line-2);
+  background:var(--plum-50);color:var(--plum-700);font-size:.83rem;font-weight:700}
+details.det > summary::-webkit-details-marker{display:none}
+details.det > summary::after{content:"▾";font-size:.8em}
+details.det[open] > summary::after{content:"▴"}
+details.det[open] > summary{margin-bottom:4px}
+details.det ul.det{margin-top:6px}
+
+/* ===== アーティスト ===== */
+.acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:9px;margin-top:12px}
+.act{background:var(--surf);border:1px solid var(--line);border-radius:12px;padding:13px 14px;
+  font-weight:700;font-size:.92rem;line-height:1.5}
+.act small{display:block;font-weight:400;font-size:.76rem;color:var(--ink-2);margin-top:2px}
+
 .peace{display:flex;align-items:center;gap:16px;min-height:96px;padding:20px;
   background:linear-gradient(135deg,var(--plum-700),var(--plum-500));
   border-radius:16px;color:#FFFBF4;text-decoration:none;box-shadow:var(--shadow)}
 .peace .n{flex:1;min-width:0}
 .peace .d{font-family:var(--ff-m);font-size:.9rem;color:var(--gold-l);letter-spacing:.04em}
-.peace .t{display:block;font-family:var(--ff-m);font-weight:800;font-size:1.3rem;margin-top:3px}
+.peace .t{display:block;font-family:var(--ff-m);font-weight:800;font-size:1.26rem;margin-top:3px}
 .peace .s{display:block;font-size:.8rem;color:var(--onplum-2);margin-top:5px;line-height:1.7}
 .peace .go{flex:none;width:44px;height:44px;border-radius:50%;background:rgba(255,251,244,.16);
   display:grid;place-items:center;font-size:1.2rem}
 
-.note{margin-top:18px;margin-bottom:8px;padding:16px 18px;border-left:4px solid var(--plum-300);
+.note{margin-top:18px;padding:16px 18px;border-left:4px solid var(--plum-300);
   background:var(--plum-50);border-radius:0 12px 12px 0;font-size:.9rem;color:var(--ink-2)}
+.warn{border-left-color:var(--beni);background:#FBEFEC;color:var(--ink)}
+.warn b{color:var(--beni)}
 
 /* ===== フッター ===== */
 footer{background:var(--plum-900);color:var(--onplum-2);margin-top:44px;
@@ -158,11 +227,6 @@ footer .cp{margin-top:26px;padding-top:16px;border-top:1px solid rgba(247,242,25
 footer .ga{margin-top:18px;padding-top:14px;border-top:1px solid rgba(247,242,251,.14);
   font-size:.76rem;color:var(--onplum-3);line-height:1.8}
 footer .ga a{color:var(--onplum-2);text-decoration:underline}
-
-/* ===== 写真 ===== */
-.photo{margin:24px auto 0;border-radius:16px;overflow:hidden;line-height:0;
-  background:var(--plum-900);box-shadow:var(--shadow)}
-.photo img{display:block;width:100%;height:auto}
 </style>
 
 <!-- 読谷山花織：ジンバナ（銭花）／オージバナ（扇花）／カジマヤーバナ（風車花） -->
@@ -215,21 +279,106 @@ footer .ga a{color:var(--onplum-2);text-decoration:underline}
   <ul id="newsList"></ul>
 </div></section>
 
+<nav class="nav" aria-label="目次"><div class="wrap nav-in">
+  <a href="#outline">開催概要</a>
+  <a href="#program">プログラム</a>
+  <a href="#peace">ピースコンサート</a>
+  <a href="#events">展示・イベント</a>
+  <a href="#ushi">闘牛大会</a>
+  <a href="#access">交通</a>
+  <a href="#info">お願い</a>
+</div></nav>
+
 <main class="wrap">
+
+<section id="outline">
   <div class="sechead"><h2>開催概要</h2><span class="en">OVERVIEW</span><i class="rule"></i></div>
   <div class="card"><dl class="spec" id="spec"></dl></div>
+</section>
 
+<section id="program">
+  <div class="sechead"><h2>プログラム</h2><span class="en">PROGRAMME</span><i class="rule"></i></div>
+  <p class="lede">進行状況により時間が前後することがあります。</p>
+  <div class="daytabs" role="tablist" aria-label="開催日">
+    <button role="tab" data-day="23" aria-selected="false"><b class="tnum">10/23</b>金<br>ピースコンサート</button>
+    <button role="tab" data-day="24" aria-selected="true"><b class="tnum">10/24</b>土<br>1日目</button>
+    <button role="tab" data-day="25" aria-selected="false"><b class="tnum">10/25</b>日<br>2日目</button>
+  </div>
+  <ol class="prog" id="progList"></ol>
+</section>
+
+<section id="peace">
   <div class="sechead"><h2>ピースコンサート</h2><span class="en">PEACE CONCERT</span><i class="rule"></i></div>
   <a class="peace" href="https://smileworks620.wixsite.com/peacepiece" target="_blank" rel="noopener">
     <span class="n">
-      <span class="d tnum">2026.10.23 金</span>
-      <span class="t">ピースコンサート</span>
-      <span class="s">読谷から平和の願いを発信するコンサートです。出演者・開演時刻・入場方法は特設サイトをご覧ください。</span>
+      <span class="d tnum">2026.10.23 金　開場 16:30 ／ 開演 17:00</span>
+      <span class="t">第10回 Okinawan Dream<br>100万人の平和コンサート</span>
+      <span class="s">読谷村運動広場・入場無料。くわしくは特設サイトをご覧ください。</span>
     </span>
     <span class="go" aria-hidden="true">↗</span>
   </a>
+  <h3 style="font-size:1rem;margin-top:22px">出演アーティスト<span style="font-family:var(--ff-g);font-weight:400;font-size:.78rem;color:var(--ink-3);margin-left:8px">順不同</span></h3>
+  <div class="acts" id="acts"></div>
+</section>
 
-  <p class="note">プログラム、会場マップ、交通・駐車場、出店の情報は、決まりしだいこのサイトで公開します。</p>
+<section id="events">
+  <div class="sechead"><h2>展示・イベント</h2><span class="en">EXHIBITIONS</span><i class="rule"></i></div>
+  <div id="eventList"></div>
+</section>
+
+<section id="ushi">
+  <div class="sechead"><h2>闘牛大会</h2><span class="en">BULLFIGHTING</span><i class="rule"></i></div>
+  <div class="box">
+    <h3><span class="when tnum">2026.10.18 日</span>読谷まつり 第29回「闘牛大会」</h3>
+    <ul>
+      <li>会場：石川多目的ドーム</li>
+      <li>闘牛大会 13:00〜（開会式 12:45〜）</li>
+    </ul>
+    <div class="note warn" style="margin-top:14px">
+      <p><b>うるま市石川多目的ドームには駐車できません。</b></p>
+      <p style="margin-top:6px">臨時駐車場：うるま市石川体育館横駐車場（うるま市石川石崎1丁目2）<br>
+      臨時駐車場から無料シャトルバスで送迎します。</p>
+    </div>
+  </div>
+</section>
+
+<section id="access">
+  <div class="sechead"><h2>交通</h2><span class="en">ACCESS</span><i class="rule"></i></div>
+  <div class="box">
+    <h3>路線バス</h3>
+    <p>28番・29番・228番（読谷線）／20番（名護西線）</p>
+  </div>
+  <div class="box">
+    <h3>鳳バス 臨時便</h3>
+    <p>読谷村コミュニティバス「鳳バス」が、10月24日（土）・25日（日）に臨時便を運行します。</p>
+  </div>
+  <div class="box">
+    <h3>会場</h3>
+    <p>読谷村運動広場<br>沖縄県中頭郡読谷村字座喜味2901番地1（読谷村役場となり）</p>
+    <p style="margin-top:10px"><a href="https://www.google.com/maps/search/?api=1&query=%E8%AA%AD%E8%B0%B7%E6%9D%91%E9%81%8B%E5%8B%95%E5%BA%83%E5%A0%B4" target="_blank" rel="noopener">Googleマップで開く ↗</a></p>
+  </div>
+  <div class="note">まつり会場のほか、読谷村多目的広場・読谷村文化センター・伝統工芸総合センターでも催しがあります。</div>
+</section>
+
+<section id="info">
+  <div class="sechead"><h2>お願い・ご案内</h2><span class="en">INFORMATION</span><i class="rule"></i></div>
+  <div class="box">
+    <h3>ごみの分別にご協力ください</h3>
+    <p>環境にやさしいユンタンザ美ら村づくり。ごみは分別してゴミステーションへお願いします。</p>
+  </div>
+  <div class="box">
+    <h3>ドローンでの撮影はご遠慮ください</h3>
+    <p>会場内および周辺でのドローン撮影は禁止です。</p>
+  </div>
+  <div class="box">
+    <h3>FMよみたんで生中継</h3>
+    <p>ラジオ 78.6MHz とインターネットで、2日間とも生中継します。</p>
+  </div>
+  <div class="box">
+    <h3>荒天時</h3>
+    <p>荒天の場合は、内容を変更または中止することがあります。当日の実施については、このサイトの更新情報でお知らせします。</p>
+  </div>
+</section>
 
 </main>
 
@@ -238,6 +387,7 @@ footer .ga a{color:var(--onplum-2);text-decoration:underline}
   <p>事務局：読谷村役場 総務課<br>〒904-0392 沖縄県中頭郡読谷村字座喜味2901番地1</p>
   <p><a class="tel tnum" href="tel:0989829201">098-982-9201</a></p>
   <p style="font-size:.8rem;color:var(--onplum-3)">受付時間 8:30〜17:15（土日祝を除く）</p>
+  <p style="margin-top:14px">まつり当日のお問い合わせ<br><a class="tel tnum" href="tel:09095978600">090-9597-8600</a></p>
   <div class="ga" id="gaNotice" hidden>
     <p style="font-size:.76rem;margin:0">このサイトでは、サイトの利用状況を把握するためGoogleアナリティクスを利用しています。
     Cookieを使って匿名のアクセス情報を集めており、個人を特定する情報は含まれません。
@@ -251,6 +401,7 @@ footer .ga a{color:var(--onplum-2);text-decoration:underline}
 (function(){
 "use strict";
 var $=function(s){return document.querySelector(s)};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 
 /* ============================================================
@@ -258,21 +409,125 @@ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;
    d=日付 / tag=ラベル / pri:1 でラベルが濃い紫（緊急告知用） / t=本文
    ============================================================ */
 var NEWS=[
+ {d:'2026.10.05',tag:'お知らせ',t:'プログラム、ピースコンサートの出演アーティスト、展示・イベントの情報を公開しました。'},
  {d:'2026.10.01',tag:'重要',pri:1,t:'第52回は会場レイアウトが大きく変わります。会場マップは決まりしだいこのサイトで公開します。'},
  {d:'2026.10.01',tag:'お知らせ',t:'第52回読谷まつりの特設サイトを公開しました。'}
 ];
 
 /* ============================================================
-   開催概要　['見出し','本文HTML'] の並び。行を足せば項目が増えます
+   開催概要　['見出し','本文HTML'] の並び
    ============================================================ */
 var SPEC=[
  ['日時','<b class="tnum">2026年10月24日</b>（土）・<b class="tnum">25日</b>（日）'+
-         '<span class="sub">ピースコンサート：10月23日（金）</span>'],
+         '<span class="sub">ピースコンサート：10月23日（金）開場16:30／開演17:00</span>'],
  ['会場','読谷村運動広場<span class="sub">沖縄県中頭郡読谷村字座喜味2901番地1（読谷村役場となり）</span>'],
  ['入場','無料'],
  ['主催','読谷まつり実行委員会'],
- ['荒天時','荒天の場合は、内容を変更または中止することがあります。'+
-           '<span class="sub">当日の実施については、このサイトの更新情報でお知らせします。</span>']
+ ['お問い合わせ','<span class="tnum">098-982-9201</span><span class="sub">まつり当日は 090-9597-8600</span>']
+];
+
+/* ============================================================
+   プログラム
+   t=時刻 / n=演目 / note=補足 / why=意味の説明 / cls='hl'（強調）'fire'（花火）
+   det=内訳。文字列、または {g:'見出し', items:[...]} を並べます
+   ============================================================ */
+var PROG={
+ '23':[
+  {t:'16:30',n:'開場',cls:''},
+  {t:'17:00',n:'第10回 Okinawan Dream 100万人の平和コンサート',cls:'hl',
+   note:'読谷村運動広場・入場無料',
+   why:'読谷から平和の願いを発信するコンサートです。出演アーティストは「ピースコンサート」の欄をご覧ください。'}
+ ],
+ '24':[
+  {t:'14:00',n:'オープニングセレモニー',
+   det:['開催宣言：読谷村商工会 会長 仲座 一正']},
+  {t:'14:00',n:'盆栽展・テナント営業'},
+  {t:'14:05',n:'オープニングアクト　読谷高校ダンス部'},
+  {t:'14:15',n:'村内小学4年生児童による集団演技',
+   det:['古堅南小学校、渡慶次小学校、読谷小学校、喜名小学校、古堅小学校']},
+  {t:'15:30',n:'読谷高校ダンス部'},
+  {t:'15:30',n:'創作「進貢船」一般開放',note:'18:00まで／読谷村役場 北側駐車場'},
+  {t:'16:00',n:'読谷村文化協会',
+   det:['演舞：沖縄空手道協会上地流読谷道場／沖縄上地流唐手道保存会読谷修武館',
+        '日舞サークル葵の会','真美健康体操サークル','フラダンス部会','しまうた部会','演劇部会']},
+  {t:'18:15',n:'実行委員長あいさつ',det:['読谷村長　伊波 篤']},
+  {t:'18:15',n:'赤犬子琉球古典音楽大演奏会',cls:'hl',
+   why:'琉球王朝時代、本村・楚辺出身で各地を歌と三線で吟遊した三線歌謡の始祖・赤犬子。一人の先人の魂が時代と世代を超えて受け継がれ、この大演奏会へと結実しました。第7回から続く、まつりの中核です。',
+   det:[{g:'プロローグ（島太鼓）',items:['ひがけい子と島太鼓']},
+        {g:'赤犬子入場〜イリベーシ',items:['楚辺自治会']},
+        {g:'歓迎のことば',items:['村の長（読谷村教育委員会 教育長 比嘉 達）']},
+        {g:'古典音楽大演奏',items:['かぎやで風節、恩納節、特牛節']},
+        {g:'赤犬子大主前のことば',items:['楚辺自治会']},
+        {g:'歌舞「迎え誇ら」',items:['かぎやで風：金城末子琉舞道場',
+          '器楽演奏：渡りざう、瀧落菅撹、湊くり節、揚作田節',
+          '上り口説：新垣満子琉舞研究所','浜千鳥：古堅自治会','瓦屋：神谷みつ子琉舞研究所',
+          '秋の踊り：石嶺信子琉舞道場','京太郎：伊良皆伝統芸能保存会','湊くり節：津覇澄子琉舞練場']},
+        {g:'フィナーレ',items:['踊りクヮディーサー：村女性の会キラリ・各自治会の婦人会員']},
+        {g:'赤犬子退場',items:['座直し演奏（かぎやで風節）']}]},
+  {t:'20:30',n:'花火',cls:'fire'}
+ ],
+ '25':[
+  {t:'8:30',n:'第31回 読谷まつり少年野球大会 決勝戦',note:'ゆんたんざソフトボール場（試合開始予定）'},
+  {t:'11:30',n:'盆栽展・テナント営業'},
+  {t:'12:30',n:'第31回 読谷まつり少年野球大会 表彰式'},
+  {t:'12:30',n:'創作「進貢船」一般開放',note:'15:00まで／読谷村役場 北側駐車場'},
+  {t:'13:00',n:'団体演技',
+   det:['読谷村老人クラブ連合会','読谷村子ども会育成連絡協議会']},
+  {t:'15:00',n:'受け継ごう読谷（ふるさと）の心',cls:'hl',
+   why:'読谷村に生まれ育った読谷っ子たち。地域の伝統文化・芸能を脈々と今に引き継ぎ、そして未来へ。',
+   det:['三線・箏・太鼓・笛演奏：赤犬子子どもクラブ（渡りぞう、瀧落菅撹、秋の踊り、安波節、子守節、安里屋ユンタ）',
+        '獅子舞：渡慶次子ども獅子舞クラブ','与那国のマヤー小：古波倉淳子琉舞道場',
+        '貫花（九年母木）：稲嶺ひとみ琉舞道場','鳩間節：仲座悦子琉舞研究所',
+        '波平棒：波平子ども棒術クラブ','前之浜：儀間代利美琉舞練場',
+        '谷茶前：知名菊美琉舞研究所','座喜味棒：座喜味子ども会']},
+  {t:'17:20',n:'創作「進貢船（しんくうせん）」',cls:'hl',
+   why:'1372年、読谷山の泰期ら若者達の乗った進貢船が出航。これが琉球王国と中国の大交易時代の幕開けとなりました。帰還した喜びを再現する創作で、出演者と大観衆が一体となる読谷まつりのフィナーレです。',
+   det:[{g:'ナレーション',items:['読谷高校（放送部）']},
+        {g:'「調」',items:['吹奏楽演奏：読谷小・読谷中・古堅中・読谷高校',
+          '手話：手話サークル「花織」「ゆんたんじゃ」',
+          '合唱：まつり祝祭合唱団、渡慶次小・古堅小合同音楽部']},
+        {g:'「標」',items:['太鼓隊：村内青年会','ノロの炎：読谷村青年団協議会']},
+        {g:'「航」',items:['棒術（スー巻）：波平伝統芸能保存会','たいまつ隊：読谷村青年団協議会']},
+        {g:'「迎」',items:['帰還のことば：泰期（読谷村商工会青年部 上地 厚輔）',
+          '迎えのことば：村の長（うちなーぐちうむい★プロジェクト 松田 美怜）']},
+        {g:'「宴」',items:['南洋浜千鳥：比嘉ルミ子琉舞研究所','白馬の舞：稲嶺盛秀琉舞道場',
+          '作たる米：長浜伝統芸能保存会','空手演舞：小林流昭武館',
+          '潮風：山城亜矢乃琉舞研究所','棒術：波平伝統芸能保存会']},
+        {g:'「送」',items:['貫花：村女性の会キラリ・各自治会の婦人会員','エイサー・カチャーシー：村内青年会']},
+        {g:'「再」',items:['かりゆしのうた：照屋早月琉球古典音楽研究所','かりゆしのことば：読谷村長 伊波 篤']}]},
+  {t:'20:30',n:'花火',cls:'fire'}
+ ]
+};
+
+/* ============================================================
+   ピースコンサート 出演アーティスト（順不同）
+   ============================================================ */
+var ACTS=[
+ ['島袋 優（BEGIN）と沖縄オールスターズ',''],['古謝 美佐子',''],['きいやま商店',''],
+ ['照屋工務店','Vo. ガレッジセール・ゴリ'],['川満 ゆうき',''],['ナオキ屋',''],
+ ['ありんくりん',''],['けいたりん','プロパン7'],['空馬 良樹',''],['初恋クロマニヨン','']
+];
+
+/* ============================================================
+   展示・イベント
+   ============================================================ */
+var EVENTS=[
+ {h:'世界遺産 座喜味城跡／ユンタンザミュージアム',when:'読谷まつり期間中',
+  items:['入場無料','常設展示　読谷の歴史と文化、自然、美術工芸品']},
+ {h:'児童生徒作品展',when:'読谷村文化センター 1F中ホール',items:[]},
+ {h:'第21回 ジュニアフェスティバル in 読谷まつり',when:'読谷村文化センター ふれあい広場 特設ステージ',
+  items:['10月24日（土）16:30〜20:30頃','10月25日（日）18:00〜20:00頃'],
+  p:'児童館音楽部、ダンスチーム、高校ダンス部など。熱いBEATでパワー全開。'},
+ {h:'呈茶',when:'読谷村文化センター 1F談話室',
+  items:['10月24日（土）14:00〜16:00','10月25日（日）13:00〜16:00','泉川社中、読谷高校、読谷中学校、渡慶次小学校']},
+ {h:'読谷山花織 展示即売会',when:'伝統工芸総合センター',
+  items:['10月24日（土）10:00〜18:00','10月25日（日）10:00〜17:00']},
+ {h:'残波灯台 無料参観',when:'残波岬',items:['10月24日（土）9:30〜16:30']},
+ {h:'第31回 読谷まつり少年野球大会',when:'9月26日（土）〜10月25日（日）',
+  items:['10月25日（日）決勝戦 8:30試合開始予定（ゆんたんざソフトボール場）','12:30 まつりステージにて表彰式']},
+ {h:'創作「進貢船」一般開放',when:'読谷村役場 北側駐車場',
+  items:['10月24日（土）15:30〜18:00','10月25日（日）12:30〜15:00'],
+  p:'本番で使う進貢船を間近で見ることができます。'}
 ];
 
 /* ---------- 描画 ---------- */
@@ -283,6 +538,44 @@ $('#newsList').innerHTML=NEWS.map(function(n){
 $('#spec').innerHTML=SPEC.map(function(r){
   return '<dt>'+esc(r[0])+'</dt><dd>'+r[1]+'</dd>'}).join('');
 
+$('#acts').innerHTML=ACTS.map(function(a){
+  return '<div class="act">'+esc(a[0])+(a[1]?'<small>'+esc(a[1])+'</small>':'')+'</div>'}).join('');
+
+$('#eventList').innerHTML=EVENTS.map(function(e){
+  return '<div class="box"><h3><span class="when">'+esc(e.when)+'</span>'+esc(e.h)+'</h3>'+
+    (e.p?'<p>'+esc(e.p)+'</p>':'')+
+    (e.items.length?'<ul>'+e.items.map(function(i){return '<li>'+esc(i)+'</li>'}).join('')+'</ul>':'')+
+    '</div>'}).join('');
+
+function detHTML(det){
+  if(!det||!det.length)return'';
+  var n=0;
+  var body='<ul class="det">'+det.map(function(d){
+    if(typeof d==='string'){n++;return '<li>'+esc(d)+'</li>'}
+    n+=d.items.length;
+    return '<li><span class="grp">'+esc(d.g)+'</span><ul>'+
+      d.items.map(function(i){return '<li>'+esc(i)+'</li>'}).join('')+'</ul></li>';
+  }).join('')+'</ul>';
+  /* 件数が多いものは折りたたむ */
+  if(n>5)return '<details class="det"><summary>出演団体・演目をみる（'+n+'件）</summary>'+body+'</details>';
+  return body;
+}
+function renderProg(day){
+  $('#progList').innerHTML=(PROG[day]||[]).map(function(p){
+    return '<li class="'+(p.cls||'')+'">'+
+      '<div class="ptime tnum">'+esc(p.t)+'</div>'+
+      '<div><div class="pn">'+esc(p.n)+'</div>'+
+      (p.note?'<p class="pnote">'+esc(p.note)+'</p>':'')+
+      (p.why?'<p class="pwhy">'+esc(p.why)+'</p>':'')+
+      detHTML(p.det)+'</div></li>'}).join('');
+}
+renderProg('24');
+
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.daytabs button');
+  if(b){$$('.daytabs button').forEach(function(x){x.setAttribute('aria-selected',x===b)});
+    renderProg(b.dataset.day);return}
+});
 
 /* ---------- アクセス解析の注記（GA_IDを設定したときだけ表示） ---------- */
 if(typeof GA_ID==='string' && GA_ID){ var gn=$('#gaNotice'); if(gn) gn.hidden=false }
